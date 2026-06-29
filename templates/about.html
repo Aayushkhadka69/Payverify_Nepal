@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}About — PayVerify Nepal{% endblock %}
+{% block content %}
+<section class="page-section">
+  <div class="page-hero">
+    <div class="hero-badge"><i class="fas fa-graduation-cap"></i> Thesis Project 2025</div>
+    <h1 class="page-title">About <span class="gradient-text">PayVerify Nepal</span></h1>
+    <p class="page-subtitle">
+      An AI-driven solution built to protect small shop owners across Kathmandu Valley
+      from payment screenshot fraud.
+    </p>
+  </div>
+
+  <div class="about-grid">
+    <div class="card about-card">
+      <div class="about-icon"><i class="fas fa-bullseye"></i></div>
+      <h3>The Problem</h3>
+      <p>
+        Small businesses in Nepal increasingly rely on eSewa and Khalti for digital payments.
+        However, many shop owners verify payments by simply looking at a screenshot — which
+        can be easily edited or faked. This leads to real financial losses for honest sellers.
+      </p>
+    </div>
+
+    <div class="card about-card">
+      <div class="about-icon"><i class="fas fa-lightbulb"></i></div>
+      <h3>Our Solution</h3>
+      <p>
+        PayVerify Nepal uses Optical Character Recognition (OCR) to read the contents of a
+        payment screenshot, then applies rule-based checks and a machine learning model
+        to flag inconsistencies that indicate a fake or edited screenshot.
+      </p>
+    </div>
+
+    <div class="card about-card">
+      <div class="about-icon"><i class="fas fa-shield-halved"></i></div>
+      <h3>Privacy First</h3>
+      <p>
+        All verification happens locally. Screenshots and results are stored only for your
+        own account and are never shared with third parties. No real banking
+        credentials are ever requested or stored.
+      </p>
+    </div>
+
+    <div class="card about-card">
+      <div class="about-icon"><i class="fas fa-users"></i></div>
+      <h3>Who It's For</h3>
+      <p>
+        Designed for small shop owners aged 25–55 in Kathmandu Valley who accept
+        eSewa and Khalti payments daily and need a fast, reliable way to confirm
+        that a payment screenshot is genuine before handing over goods or services.
+      </p>
+    </div>
+  </div>
+
+  <div class="card tech-card">
+    <div class="card-header"><i class="fas fa-microchip"></i> Technology Stack</div>
+    <div class="tech-grid">
+      <div class="tech-item">
+        <i class="fas fa-text-height"></i>
+        <strong>Tesseract OCR</strong>
+        <span>Text extraction from screenshots</span>
+      </div>
+      <div class="tech-item">
+        <i class="fas fa-brain"></i>
+        <strong>Scikit-learn</strong>
+        <span>Random Forest fraud classifier</span>
+      </div>
+      <div class="tech-item">
+        <i class="fas fa-flask"></i>
+        <strong>Flask</strong>
+        <span>Python web framework</span>
+      </div>
+      <div class="tech-item">
+        <i class="fas fa-image"></i>
+        <strong>OpenCV</strong>
+        <span>Image preprocessing</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-cta">
+    <h2>Ready to protect your business?</h2>
+    <p>Sign up for free and start verifying payment screenshots today.</p>
+    {% if not session.username %}
+      <a href="/signup" class="btn btn-primary"><i class="fas fa-user-plus"></i> Create Free Account</a>
+    {% else %}
+      <a href="/" class="btn btn-primary"><i class="fas fa-upload"></i> Verify a Screenshot</a>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

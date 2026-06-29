@@ -1,0 +1,170 @@
+[
+  {
+    "id": "42fd562c",
+    "verdict": "genuine",
+    "confidence": 66.7,
+    "risk_score": 33.3,
+    "flags": [
+      "No payment amount detected in screenshot",
+      "No payment status detected"
+    ],
+    "fields": {
+      "amount": null,
+      "transaction_id": "9840276791",
+      "status": null,
+      "date": null,
+      "platform": "eSewa"
+    },
+    "filename": "a2db7867d9c841eeb0b104fd2d1217f8_esewa_screnshot.jpeg",
+    "timestamp": "2026-06-29 19:45:26",
+    "model_used": "Rule-based",
+    "detailed_analysis": {
+      "analysis": {
+        "amount_check": {
+          "status": "fail",
+          "details": "Amount: Not detected",
+          "confidence": 0
+        },
+        "txn_check": {
+          "status": "pass",
+          "details": "TXN ID: 9840276791",
+          "confidence": 90
+        },
+        "status_check": {
+          "status": "fail",
+          "details": "Status: Not detected",
+          "confidence": 0
+        },
+        "platform_check": {
+          "status": "pass",
+          "details": "Platform: eSewa",
+          "confidence": 75
+        },
+        "date_check": {
+          "status": "fail",
+          "details": "Date: Not detected",
+          "confidence": 0
+        }
+      },
+      "trust_score": 40.0,
+      "passed_checks": 2,
+      "total_checks": 5,
+      "verdict": "genuine",
+      "confidence": 66.7
+    },
+    "extracted_text": "f NEN XXX XX O\n\u00a7 \u00a2\n' 4\nah Spl paymoant with ftlanda ? >\nly Sond Monay y 2950.00\n2028-49015 Vat OM\nComptot 0} a ; /\n_ Amount (NPR): Transaction Code:\n2950 | 17W26MM | ,\nf\nProcassed By: a ,\n9840276791. |, /\nPurposa: Rocelver Name; |\nParsonal Use Krishna Mahato, Sud]\nPayment Method: \u2014- Receiver Esewa Id: :\neSewa Wallet 9817643823\nRemarks; inftlater Name: .\nPay Hem Kumarl Tamang\nFc ee\n",
+    "username": "aayush"
+  },
+  {
+    "id": "a30e2719",
+    "verdict": "genuine",
+    "confidence": 66.7,
+    "risk_score": 33.3,
+    "flags": [
+      "No payment amount detected in screenshot",
+      "No payment status detected"
+    ],
+    "fields": {
+      "amount": null,
+      "transaction_id": "9840276791",
+      "status": null,
+      "date": null,
+      "platform": "eSewa"
+    },
+    "filename": "ccc26df270e74dd182e10faef2d502e3_esewa_screnshot.jpeg",
+    "timestamp": "2026-06-24 09:26:21",
+    "model_used": "Rule-based",
+    "detailed_analysis": {
+      "analysis": {
+        "amount_check": {
+          "status": "fail",
+          "details": "Amount: Not detected",
+          "confidence": 0
+        },
+        "txn_check": {
+          "status": "pass",
+          "details": "TXN ID: 9840276791",
+          "confidence": 90
+        },
+        "status_check": {
+          "status": "fail",
+          "details": "Status: Not detected",
+          "confidence": 0
+        },
+        "platform_check": {
+          "status": "pass",
+          "details": "Platform: eSewa",
+          "confidence": 75
+        },
+        "date_check": {
+          "status": "fail",
+          "details": "Date: Not detected",
+          "confidence": 0
+        }
+      },
+      "trust_score": 40.0,
+      "passed_checks": 2,
+      "total_checks": 5,
+      "verdict": "genuine",
+      "confidence": 66.7
+    },
+    "extracted_text": "f NEN XXX XX O\n\u00a7 \u00a2\n' 4\nah Spl paymoant with ftlanda ? >\nly Sond Monay y 2950.00\n2028-49015 Vat OM\nComptot 0} a ; /\n_ Amount (NPR): Transaction Code:\n2950 | 17W26MM | ,\nf\nProcassed By: a ,\n9840276791. |, /\nPurposa: Rocelver Name; |\nParsonal Use Krishna Mahato, Sud]\nPayment Method: \u2014- Receiver Esewa Id: :\neSewa Wallet 9817643823\nRemarks; inftlater Name: .\nPay Hem Kumarl Tamang\nFc ee\n",
+    "username": "shrijal"
+  },
+  {
+    "id": "56bcd468",
+    "verdict": "genuine",
+    "confidence": 66.7,
+    "risk_score": 33.3,
+    "flags": [
+      "No payment amount detected in screenshot",
+      "No payment status detected"
+    ],
+    "fields": {
+      "amount": null,
+      "transaction_id": "9840276791",
+      "status": null,
+      "date": null,
+      "platform": "eSewa"
+    },
+    "filename": "7711cf6090b7450a83082783171fc1c8_esewa_screnshot.jpeg",
+    "timestamp": "2026-06-23 22:33:14",
+    "model_used": "Rule-based",
+    "detailed_analysis": {
+      "analysis": {
+        "amount_check": {
+          "status": "fail",
+          "details": "Amount: Not detected",
+          "confidence": 0
+        },
+        "txn_check": {
+          "status": "pass",
+          "details": "TXN ID: 9840276791",
+          "confidence": 90
+        },
+        "status_check": {
+          "status": "fail",
+          "details": "Status: Not detected",
+          "confidence": 0
+        },
+        "platform_check": {
+          "status": "pass",
+          "details": "Platform: eSewa",
+          "confidence": 75
+        },
+        "date_check": {
+          "status": "fail",
+          "details": "Date: Not detected",
+          "confidence": 0
+        }
+      },
+      "trust_score": 40.0,
+      "passed_checks": 2,
+      "total_checks": 5,
+      "verdict": "genuine",
+      "confidence": 66.7
+    },
+    "extracted_text": "f NEN XXX XX O\n\u00a7 \u00a2\n' 4\nah Spl paymoant with ftlanda ? >\nly Sond Monay y 2950.00\n2028-49015 Vat OM\nComptot 0} a ; /\n_ Amount (NPR): Transaction Code:\n2950 | 17W26MM | ,\nf\nProcassed By: a ,\n9840276791. |, /\nPurposa: Rocelver Name; |\nParsonal Use Krishna Mahato, Sud]\nPayment Method: \u2014- Receiver Esewa Id: :\neSewa Wallet 9817643823\nRemarks; inftlater Name: .\nPay Hem Kumarl Tamang\nFc ee\n",
+    "username": "Aayushkhadka69"
+  }
+]

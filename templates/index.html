@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}PayVerify Nepal - Payment Screenshot Verification{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Verify Payment Screenshots<br>Instantly with <span>AI</span></h1>
+    <p>Upload an eSewa or Khalti payment screenshot and get instant verification — Genuine, Fake, or Uncertain.</p>
+</div>
+
+<div class="upload-card">
+    {% if error %}
+    <div class="error-msg">
+        <i class="fas fa-exclamation-circle"></i> {{ error }}
+    </div>
+    {% endif %}
+
+    <form id="uploadForm" action="/verify" method="POST" enctype="multipart/form-data">
+        <div class="upload-area" id="uploadArea">
+            <div class="icon">📸</div>
+            <h3>Drop your screenshot here</h3>
+            <p>or click to browse</p>
+            <span class="small">Supports PNG, JPG, JPEG, WEBP (Max 10MB)</span>
+            <input type="file" name="screenshot" id="fileInput" accept="image/png,image/jpeg,image/webp,image/jpg" required>
+        </div>
+
+        <img id="preview" alt="Screenshot preview">
+        <div id="fileName" style="display:none; text-align:center; margin-top:10px; color:#667eea; font-weight:600;"></div>
+
+        <button type="submit" class="btn-verify" id="verifyBtn" disabled>
+            <span class="btn-text">🔍 Verify Payment Screenshot</span>
+            <span class="spinner"><i class="fas fa-spinner"></i></span>
+        </button>
+    </form>
+</div>
+
+<div class="features-grid">
+    <div class="feature-card">
+        <div class="icon">🤖</div>
+        <h4>AI-Powered Detection</h4>
+        <p>Advanced machine learning to detect tampered screenshots</p>
+    </div>
+    <div class="feature-card">
+        <div class="icon">⚡</div>
+        <h4>5-Second Verification</h4>
+        <p>Get results instantly — no waiting, no manual checking</p>
+    </div>
+    <div class="feature-card">
+        <div class="icon">🔒</div>
+        <h4>Secure & Private</h4>
+        <p>Your data stays on your device. No cloud storage used.</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block title %}Verification Result — PayVerify Nepal{% endblock %}
+{% block content %}
+<section class="result-section">
+  <div class="verdict-banner verdict-{{ result.verdict }}">
+    <div class="verdict-icon">
+      {% if result.verdict == 'genuine' %}<i class="fas fa-circle-check"></i>
+      {% elif result.verdict == 'fake' %}<i class="fas fa-circle-xmark"></i>
+      {% else %}<i class="fas fa-circle-question"></i>{% endif %}
+    </div>
+    <div class="verdict-text">
+      {% if result.verdict == 'genuine' %}<h1>Genuine Payment</h1><p>This screenshot appears to be authentic</p>
+      {% elif result.verdict == 'fake' %}<h1>Suspicious — Fake Detected</h1><p>This screenshot shows signs of tampering or fraud</p>
+      {% else %}<h1>Uncertain — Verify Manually</h1><p>Could not determine authenticity with high confidence</p>{% endif %}
+    </div>
+    <div class="verdict-id">ID: #{{ result.id }}</div>
+  </div>
+
+  <div class="result-grid">
+    <div class="result-left">
+      <div class="card">
+        <div class="card-header"><i class="fas fa-gauge-high"></i> Confidence Scores</div>
+        <div class="scores-row">
+          <div class="score-box score-confidence">
+            <div class="score-val">{{ result.confidence }}%</div>
+            <div class="score-label">Confidence</div>
+            <div class="score-bar"><div class="score-fill" style="width:{{ result.confidence }}%"></div></div>
+          </div>
+          <div class="score-box score-risk">
+            <div class="score-val">{{ result.risk_score }}</div>
+            <div class="score-label">Risk Score</div>
+            <div class="score-bar"><div class="score-fill risk-fill" style="width:{{ result.risk_score }}%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><i class="fas fa-magnifying-glass"></i> Extracted Information</div>
+        <table class="fields-table">
+          <tr><td class="field-key"><i class="fas fa-mobile-screen"></i> Platform</td>
+          <td class="field-val">{% if result.fields.platform %}<span class="tag tag-platform">{{ result.fields.platform }}</span>{% else %}<span class="tag tag-missing">Not detected</span>{% endif %}</td></tr>
+          <tr><td class="field-key"><i class="fas fa-money-bill"></i> Amount</td>
+          <td class="field-val">{% if result.fields.amount %}<strong>Rs. {{ result.fields.amount }}</strong>{% else %}<span class="tag tag-missing">Not found</span>{% endif %}</td></tr>
+          <tr><td class="field-key"><i class="fas fa-hashtag"></i> Txn ID</td>
+          <td class="field-val">{% if result.fields.transaction_id %}<code>{{ result.fields.transaction_id }}</code>{% else %}<span class="tag tag-missing">Not found</span>{% endif %}</td></tr>
+          <tr><td class="field-key"><i class="fas fa-circle-dot"></i> Status</td>
+          <td class="field-val">{% if result.fields.status %}<span class="tag tag-status-{{ result.fields.status | lower }}">{{ result.fields.status }}</span>{% else %}<span class="tag tag-missing">Not found</span>{% endif %}</td></tr>
+          <tr><td class="field-key"><i class="fas fa-calendar"></i> Date</td>
+          <td class="field-val">{{ result.fields.date or 'Not found' }}</td></tr>
+        </table>
+      </div>
+
+      <div class="card card-meta">
+        <div class="card-header"><i class="fas fa-microchip"></i> Analysis Details</div>
+        <div class="meta-row"><span>Model used</span><span>{{ result.model_used }}</span></div>
+        <div class="meta-row"><span>Verified at</span><span>{{ result.timestamp }}</span></div>
+        <div class="meta-row"><span>Verification ID</span><span>#{{ result.id }}</span></div>
+      </div>
+    </div>
+
+    <div class="result-right">
+      <div class="card">
+        <div class="card-header"><i class="fas fa-image"></i> Uploaded Screenshot</div>
+        <div class="img-wrapper">
+          <img src="/uploads/{{ result.filename }}" alt="Screenshot" class="result-img"
+               onerror="this.style.display='none'"/>
+          <div class="img-verdict-badge badge-{{ result.verdict }}">
+            {% if result.verdict=='genuine' %}✅ Genuine{% elif result.verdict=='fake' %}🚨 Fake{% else %}⚠️ Uncertain{% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><i class="fas fa-flag"></i> Red Flags
+          <span class="flag-count {% if result.flags|length > 0 %}flag-count-warn{% endif %}">{{ result.flags|length }}</span>
+        </div>
+        {% if result.flags %}
+        <ul class="flags-list">
+          {% for flag in result.flags %}<li class="flag-item"><i class="fas fa-triangle-exclamation"></i> {{ flag }}</li>{% endfor %}
+        </ul>
+        {% else %}
+        <div class="no-flags"><i class="fas fa-check-circle"></i><p>No red flags detected</p></div>
+        {% endif %}
+      </div>
+
+      {% if result.confidence < 65 %}
+      <div class="alert alert-warning">
+        <i class="fas fa-triangle-exclamation"></i>
+        <div><strong>Low Confidence Warning</strong><p>Please verify directly with eSewa or Khalti before accepting.</p></div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="result-actions">
+    <a href="/" class="btn btn-primary"><i class="fas fa-plus"></i> Verify Another</a>
+    <a href="/history" class="btn btn-outline"><i class="fas fa-clock-rotate-left"></i> View History</a>
+    <a href="/dashboard" class="btn btn-outline"><i class="fas fa-chart-line"></i> Dashboard</a>
+  </div>
+</section>
+{% endblock %}

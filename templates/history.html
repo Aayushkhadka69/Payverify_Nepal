@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}History - PayVerify Nepal{% endblock %}
+
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+    <div>
+        <h1 style="font-size:32px;">📜 Verification History</h1>
+        <p style="color:#666;">All your past payment screenshot verifications</p>
+    </div>
+    <form action="/clear-history" method="POST" style="margin:0;">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to clear all history?')" style="background:#dc3545; color:white; padding:10px 20px; border:none; border-radius:10px; cursor:pointer;">
+            <i class="fas fa-trash"></i> Clear All
+        </button>
+    </form>
+</div>
+
+<div style="background:white; border-radius:16px; padding:25px; box-shadow:0 2px 10px rgba(0,0,0,0.06); overflow:auto;">
+    {% if logs %}
+    <table class="history-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Date & Time</th>
+                <th>Platform</th>
+                <th>Amount</th>
+                <th>Transaction ID</th>
+                <th>Verdict</th>
+                <th>Confidence</th>
+                <th>Flags</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ log.timestamp }}</td>
+                <td>{{ log.fields.platform or 'N/A' }}</td>
+                <td>{{ log.fields.amount or 'N/A' }}</td>
+                <td style="font-size:12px; font-family:monospace;">{{ log.fields.transaction_id or 'N/A' }}</td>
+                <td><span class="badge badge-{{ log.verdict }}">{{ log.verdict|upper }}</span></td>
+                <td>{{ log.confidence }}%</td>
+                <td><span style="font-size:12px; color:#666;">{{ log.flags|length }} flags</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div style="text-align:center; padding:40px 0; color:#999;">
+        <p style="font-size:48px;">📭</p>
+        <p>No verifications yet. Start by uploading a screenshot!</p>
+        <a href="/" class="btn btn-primary" style="margin-top:15px;">Verify Now</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

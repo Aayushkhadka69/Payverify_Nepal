@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}Verification Report - PayVerify Nepal{% endblock %}
+
+{% block content %}
+<div class="result-card">
+    <!-- Verdict Banner -->
+    <div class="verdict-banner verdict-{{ result.verdict }}">
+        {% if result.verdict == 'genuine' %}
+            ✅ PAYMENT VERIFIED - GENUINE
+        {% elif result.verdict == 'fake' %}
+            🚨 FRAUD DETECTED - FAKE SCREENSHOT
+        {% else %}
+            ⚠️ VERIFICATION UNCERTAIN
+        {% endif %}
+    </div>
+
+    <!-- Confidence & Risk -->
+    <div class="section">
+        <h3>📊 VERIFICATION SCORE</h3>
+        <div style="display: flex; justify-content: space-between; font-size: 14px; color: #666;">
+            <span>Confidence: {{ result.confidence }}%</span>
+            <span>Risk Score: {{ result.risk_score }}%</span>
+        </div>
+        <div class="score-bar">
+            <div class="score-fill score-{{ 'high' if result.confidence > 80 else 'medium' if result.confidence > 60 else 'low' }}" 
+                 style="width: {{ result.confidence }}%;">
+                {{ result.confidence }}%
+            </div>
+        </div>
+        <div style="margin-top: 10px; font-size: 14px; color: #666;">
+            Trust Score: {{ result.detailed_analysis.trust_score }}% 
+            ({{ result.detailed_analysis.passed_checks }}/{{ result.detailed_analysis.total_checks }} checks passed)
+        </div>
+    </div>
+
+    <!-- Extracted Information -->
+    <div class="section">
+        <h3>📋 EXTRACTED INFORMATION</h3>
+        <div class="grid-2">
+            <div><strong>Amount:</strong> {{ result.fields.amount or '❌ Not detected' }}</div>
+            <div><strong>Transaction ID:</strong> {{ result.fields.transaction_id or '❌ Not detected' }}</div>
+            <div><strong>Status:</strong> {{ result.fields.status or '❌ Not detected' }}</div>
+            <div><strong>Date:</strong> {{ result.fields.date or '❌ Not detected' }}</div>
+            <div><strong>Platform:</strong> {{ result.fields.platform or '❌ Not detected' }}</div>
+        </div>
+    </div>
+
+    <!-- Detailed Analysis -->
+    <div class="section">
+        <h3>🔍 DETAILED ANALYSIS</h3>
+        <div class="evidence-box">
+            <table>
+                <tr>
+                    <th>Check</th>
+                    <th>Status</th>
+                    <th>Confidence</th>
+                </tr>
+                {% for key, check in result.detailed_analysis.analysis.items() %}
+                <tr>
+                    <td>{{ key|replace('_', ' ')|title }}</td>
+                    <td class="match-{{ check.status }}">
+                        {{ '✅ Pass' if check.status == 'pass' else '❌ Fail' }}
+                    </td>
+                    <td>{{ check.confidence }}%</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <!-- Red Flags -->
+    <div class="section">
+        <h3>🚨 RED FLAGS FOUND ({{ result.flags|length }})</h3>
+        {% if result.flags|length > 0 %}
+            {% for flag in result.flags %}
+                <div class="flag-item">
+                    ⚠️ {{ flag }}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="flag-item success">
+                ✅ No red flags detected - Screenshot looks authentic
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Extracted Text Preview -->
+    {% if result.extracted_text %}
+    <div class="section">
+        <h3>📝 EXTRACTED TEXT PREVIEW</h3>
+        <div class="evidence-box" style="background: white; font-family: monospace; font-size: 13px; max-height: 150px; overflow-y: auto;">
+            {{ result.extracted_text }}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- AI Explanation -->
+    <div class="section">
+        <h3>🤖 AI DECISION EXPLANATION</h3>
+        <p><strong>Model used:</strong> {{ result.model_used }}</p>
+        <p><strong>Decision factors:</strong></p>
+        <ul style="padding-left: 20px; margin-top: 10px;">
+            {% if result.flags|length > 0 %}
+                <li>Multiple red flags detected ({{ result.flags|length }} flags)</li>
+                <li>Confidence score: {{ result.confidence }}%</li>
+                <li>Risk score: {{ result.risk_score }}%</li>
+            {% else %}
+                <li>All checks passed verification</li>
+                <li>High confidence in authenticity</li>
+            {% endif %}
+        </ul>
+        <div style="margin-top: 15px; padding: 15px; background: #e8f4fd; border-radius: 8px;">
+            <strong>⚖️ Recommendation:</strong>
+            {% if result.verdict == 'genuine' %}
+                This payment screenshot appears authentic. You can safely accept this payment.
+            {% elif result.verdict == 'fake' %}
+                This screenshot shows signs of tampering. DO NOT accept this payment. Request the customer to show the transaction in their app.
+            {% else %}
+                Unable to verify with high confidence. Please manually check the transaction in your eSewa/Khalti app.
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Verification Details -->
+    <div class="section" style="font-size: 13px; color: #6c757d; background: #f8f9fa;">
+        <p><strong>Verification ID:</strong> #{{ result.id }}</p>
+        <p><strong>Verified at:</strong> {{ result.timestamp }}</p>
+        <p><strong>Screenshot:</strong> {{ result.filename }}</p>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="btn-group">
+        <a href="/" class="btn btn-primary">📤 Verify Another</a>
+        <a href="/history" class="btn btn-secondary">📜 View History</a>
+        <a href="/dashboard" class="btn btn-info">📊 Dashboard</a>
+        <button onclick="window.print()" class="btn btn-success">📄 Download Report (PDF)</button>
+    </div>
+</div>
+{% endblock %}
