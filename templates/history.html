@@ -5,17 +5,17 @@
 {% block content %}
 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
     <div>
-        <h1 style="font-size:32px;">📜 Verification History</h1>
-        <p style="color:#666;">All your past payment screenshot verifications</p>
+        <h1 style="font-size:32px; font-family: var(--font-cyber); color: var(--text-primary);">📜 Verification History</h1>
+        <p style="color: var(--text-secondary);">Click any row to view full verification details</p>
     </div>
     <form action="/clear-history" method="POST" style="margin:0;">
-        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to clear all history?')" style="background:#dc3545; color:white; padding:10px 20px; border:none; border-radius:10px; cursor:pointer;">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to clear all history?')" style="background:rgba(255,0,64,0.1); color:var(--neon-red); padding:10px 20px; border:1px solid var(--neon-red); border-radius:8px; cursor:pointer; transition: all 0.3s ease;">
             <i class="fas fa-trash"></i> Clear All
         </button>
     </form>
 </div>
 
-<div style="background:white; border-radius:16px; padding:25px; box-shadow:0 2px 10px rgba(0,0,0,0.06); overflow:auto;">
+<div style="background: var(--dark-card); border-radius: 12px; padding: 25px; border: 1px solid rgba(0, 212, 255, 0.05); overflow:auto;">
     {% if logs %}
     <table class="history-table">
         <thead>
@@ -28,6 +28,7 @@
                 <th>Verdict</th>
                 <th>Confidence</th>
                 <th>Flags</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -37,20 +38,127 @@
                 <td>{{ log.timestamp }}</td>
                 <td>{{ log.fields.platform or 'N/A' }}</td>
                 <td>{{ log.fields.amount or 'N/A' }}</td>
-                <td style="font-size:12px; font-family:monospace;">{{ log.fields.transaction_id or 'N/A' }}</td>
+                <td style="font-size:12px; font-family:monospace; color: var(--text-secondary);">{{ log.fields.transaction_id or 'N/A' }}</td>
                 <td><span class="badge badge-{{ log.verdict }}">{{ log.verdict|upper }}</span></td>
                 <td>{{ log.confidence }}%</td>
-                <td><span style="font-size:12px; color:#666;">{{ log.flags|length }} flags</span></td>
+                <td><span style="font-size:12px; color: var(--text-secondary);">{{ log.flags|length }} flags</span></td>
+                <td>
+                    <button onclick="showDetails('{{ log.id }}')" style="background:var(--primary); color:#fff; border:none; padding:5px 12px; border-radius:6px; cursor:pointer; font-size:12px;">
+                        View Details
+                    </button>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     {% else %}
-    <div style="text-align:center; padding:40px 0; color:#999;">
+    <div style="text-align:center; padding:40px 0; color: var(--text-secondary);">
         <p style="font-size:48px;">📭</p>
         <p>No verifications yet. Start by uploading a screenshot!</p>
         <a href="/" class="btn btn-primary" style="margin-top:15px;">Verify Now</a>
     </div>
     {% endif %}
 </div>
+
+<!-- Details Modal -->
+<div id="detailsModal" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center; padding:20px;">
+    <div style="background:var(--dark-card); max-width:800px; width:100%; max-height:90vh; overflow-y:auto; border-radius:16px; padding:30px; border:1px solid rgba(0,212,255,0.1); box-shadow:var(--shadow-glow);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h2 style="color:var(--text-primary); font-family:var(--font-cyber); font-size:20px;">🔍 Verification Details</h2>
+            <button onclick="closeDetails()" style="background:none; border:none; color:var(--text-secondary); font-size:24px; cursor:pointer;">✕</button>
+        </div>
+        <div id="detailsContent">
+            <p style="color:var(--text-secondary);">Loading...</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const logsData = {{ logs|tojson }};
+
+    function showDetails(id) {
+        const log = logsData.find(l => l.id === id);
+        if (!log) return;
+
+        const modal = document.getElementById('detailsModal');
+        const content = document.getElementById('detailsContent');
+
+        const verdictColor = log.verdict === 'genuine' ? '#00ff41' : log.verdict === 'fake' ? '#ff0040' : '#ffea00';
+        const verdictEmoji = log.verdict === 'genuine' ? '✅' : log.verdict === 'fake' ? '🚨' : '⚠️';
+
+        let flagsHtml = '';
+        if (log.flags && log.flags.length > 0) {
+            flagsHtml = '<ul style="list-style:none; padding:0;">';
+            log.flags.forEach(flag => {
+                flagsHtml += `<li style="padding:8px 12px; background:rgba(255,0,64,0.05); border-left:3px solid #ff0040; margin:5px 0; border-radius:4px; color:var(--text-secondary);">⚠️ ${flag}</li>`;
+            });
+            flagsHtml += '</ul>';
+        } else {
+            flagsHtml = '<p style="color:var(--neon-green);">✅ No red flags detected</p>';
+        }
+
+        content.innerHTML = `
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:20px;">
+                <div style="background:var(--dark-bg); padding:15px; border-radius:8px; text-align:center;">
+                    <div style="font-size:14px; color:var(--text-secondary);">Verdict</div>
+                    <div style="font-size:24px; font-weight:700; color:${verdictColor}; margin-top:5px;">${verdictEmoji} ${log.verdict.toUpperCase()}</div>
+                </div>
+                <div style="background:var(--dark-bg); padding:15px; border-radius:8px; text-align:center;">
+                    <div style="font-size:14px; color:var(--text-secondary);">Confidence</div>
+                    <div style="font-size:24px; font-weight:700; color:var(--primary); margin-top:5px;">${log.confidence}%</div>
+                </div>
+                <div style="background:var(--dark-bg); padding:15px; border-radius:8px; text-align:center;">
+                    <div style="font-size:14px; color:var(--text-secondary);">Risk Score</div>
+                    <div style="font-size:24px; font-weight:700; color:var(--neon-red); margin-top:5px;">${log.risk_score}%</div>
+                </div>
+                <div style="background:var(--dark-bg); padding:15px; border-radius:8px; text-align:center;">
+                    <div style="font-size:14px; color:var(--text-secondary);">Task Time</div>
+                    <div style="font-size:24px; font-weight:700; color:var(--neon-yellow); margin-top:5px;">${log.task_time || 'N/A'} ms</div>
+                </div>
+            </div>
+
+            <div style="background:var(--dark-bg); padding:15px; border-radius:8px; margin-bottom:15px;">
+                <h4 style="color:var(--text-primary); margin-bottom:10px;">📋 Extracted Information</h4>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; font-size:14px;">
+                    <div><span style="color:var(--text-secondary);">Amount:</span> <span style="color:var(--text-primary);">${log.fields.amount || 'Not detected'}</span></div>
+                    <div><span style="color:var(--text-secondary);">Transaction ID:</span> <span style="color:var(--text-primary);">${log.fields.transaction_id || 'Not detected'}</span></div>
+                    <div><span style="color:var(--text-secondary);">Status:</span> <span style="color:var(--text-primary);">${log.fields.status || 'Not detected'}</span></div>
+                    <div><span style="color:var(--text-secondary);">Platform:</span> <span style="color:var(--text-primary);">${log.fields.platform || 'Not detected'}</span></div>
+                    <div><span style="color:var(--text-secondary);">Date:</span> <span style="color:var(--text-primary);">${log.fields.date || 'Not detected'}</span></div>
+                </div>
+            </div>
+
+            <div style="background:var(--dark-bg); padding:15px; border-radius:8px; margin-bottom:15px;">
+                <h4 style="color:var(--text-primary); margin-bottom:10px;">🚨 Red Flags (${log.flags.length})</h4>
+                ${flagsHtml}
+            </div>
+
+            <div style="background:var(--dark-bg); padding:15px; border-radius:8px; margin-bottom:15px;">
+                <h4 style="color:var(--text-primary); margin-bottom:10px;">🤖 Model Information</h4>
+                <div style="font-size:14px; color:var(--text-secondary);">
+                    <div><span style="color:var(--text-secondary);">Model Used:</span> <span style="color:var(--text-primary);">${log.model_used || 'Rule-based'}</span></div>
+                    <div><span style="color:var(--text-secondary);">Verified At:</span> <span style="color:var(--text-primary);">${log.timestamp}</span></div>
+                    <div><span style="color:var(--text-secondary);">Verification ID:</span> <span style="color:var(--text-primary);">#${log.id}</span></div>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top:15px;">
+                <button onclick="closeDetails()" class="btn btn-primary" style="padding:10px 30px;">Close</button>
+            </div>
+        `;
+
+        modal.style.display = 'flex';
+    }
+
+    function closeDetails() {
+        document.getElementById('detailsModal').style.display = 'none';
+    }
+
+    // Close modal on outside click
+    document.getElementById('detailsModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeDetails();
+        }
+    });
+</script>
 {% endblock %}

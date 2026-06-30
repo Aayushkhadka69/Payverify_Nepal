@@ -10,5 +10,15 @@
   "aayush": {
     "password": "55d42ccef33c7f6a73ef50945ad1faa95d872f9f911ea9b1b732564c931ba950",
     "shop_name": "aayush mobile store"
+  },
+  "ram": {
+    "password": "cdb4ee2aea69cc6a83331bbe96dc2caa9a299d21329efb0336fc02a82e1839a8",
+    "shop_name": "kathmandu mobile store",
+    "age": 27
+  },
+  "Aayush": {
+    "password": "ab0d22a037bd308f990ccbe8b6dc5196b02886740945a4c1376287d2d8e6ffa7",
+    "shop_name": "aayush mobile store",
+    "age": 27
   }
 }

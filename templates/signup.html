@@ -4,37 +4,89 @@
 
 {% block content %}
 <div style="max-width: 400px; margin: 40px auto;">
-    <div style="background: white; border-radius: 16px; padding: 40px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
-        <h2 style="text-align:center; margin-bottom: 30px; font-size: 28px;">Create Account 🚀</h2>
-        <p style="text-align:center; color:#666; margin-bottom: 25px;">Start verifying payment screenshots</p>
+    <div style="background: var(--dark-card); border-radius: 16px; padding: 40px; border: 1px solid rgba(0, 212, 255, 0.08); box-shadow: var(--shadow-glow);">
+        <h2 style="text-align:center; margin-bottom: 30px; font-size: 28px; color: var(--text-primary);">Create Account 🚀</h2>
+        <p style="text-align:center; color: var(--text-secondary); margin-bottom: 25px;">Start verifying payment screenshots</p>
 
         {% if error %}
-        <div style="background:#fde8ea; color:#dc3545; padding:12px; border-radius:8px; margin-bottom:20px; text-align:center;">
-            {{ error }}
+        <div style="background:rgba(255,0,64,0.1); color:var(--neon-red); padding:12px; border-radius:8px; margin-bottom:20px; text-align:center; border-left:4px solid var(--neon-red);">
+            <i class="fas fa-exclamation-circle"></i> {{ error }}
         </div>
         {% endif %}
 
         <form method="POST">
             <div style="margin-bottom: 18px;">
-                <label style="display:block; font-weight:600; margin-bottom:5px;">Shop/Business Name</label>
-                <input type="text" name="shop_name" placeholder="Your shop name" required style="width:100%; padding:12px; border:2px solid #ddd; border-radius:8px; font-size:16px;">
+                <label style="display:block; font-weight:600; margin-bottom:5px; color: var(--text-primary);">Shop/Business Name</label>
+                <input type="text" name="shop_name" placeholder="Your shop name" required style="width:100%; padding:12px; background:var(--dark-bg); border:1px solid rgba(0,212,255,0.1); border-radius:8px; font-size:16px; color:var(--text-primary);">
             </div>
             <div style="margin-bottom: 18px;">
-                <label style="display:block; font-weight:600; margin-bottom:5px;">Username</label>
-                <input type="text" name="username" placeholder="Choose a username" required style="width:100%; padding:12px; border:2px solid #ddd; border-radius:8px; font-size:16px;">
+                <label style="display:block; font-weight:600; margin-bottom:5px; color: var(--text-primary);">Age (25-55 years)</label>
+                <input type="number" name="age" placeholder="Enter your age" min="25" max="55" required style="width:100%; padding:12px; background:var(--dark-bg); border:1px solid rgba(0,212,255,0.1); border-radius:8px; font-size:16px; color:var(--text-primary);">
+                <small style="color:var(--text-secondary); font-size:12px;">* Must be between 25-55 years old</small>
             </div>
-            <div style="margin-bottom: 25px;">
-                <label style="display:block; font-weight:600; margin-bottom:5px;">Password</label>
-                <input type="password" name="password" placeholder="Choose a password" required style="width:100%; padding:12px; border:2px solid #ddd; border-radius:8px; font-size:16px;">
+            <div style="margin-bottom: 18px;">
+                <label style="display:block; font-weight:600; margin-bottom:5px; color: var(--text-primary);">Username</label>
+                <input type="text" name="username" placeholder="Choose a username" required style="width:100%; padding:12px; background:var(--dark-bg); border:1px solid rgba(0,212,255,0.1); border-radius:8px; font-size:16px; color:var(--text-primary);">
             </div>
-            <button type="submit" style="width:100%; padding:14px; background:linear-gradient(135deg, #667eea, #764ba2); color:white; border:none; border-radius:8px; font-size:18px; font-weight:bold; cursor:pointer;">
+            <div style="margin-bottom: 18px;">
+                <label style="display:block; font-weight:600; margin-bottom:5px; color: var(--text-primary);">Password</label>
+                <input type="password" name="password" id="password" placeholder="Choose a strong password" required style="width:100%; padding:12px; background:var(--dark-bg); border:1px solid rgba(0,212,255,0.1); border-radius:8px; font-size:16px; color:var(--text-primary);">
+                <div style="margin-top:8px; font-size:12px; color:var(--text-secondary);">
+                    <div id="passwordRequirements" style="display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-top:5px;">
+                        <span id="reqLength" style="color:var(--neon-red);">❌ At least 8 characters</span>
+                        <span id="reqUpper" style="color:var(--neon-red);">❌ One uppercase letter</span>
+                        <span id="reqLower" style="color:var(--neon-red);">❌ One lowercase letter</span>
+                        <span id="reqNumber" style="color:var(--neon-red);">❌ One number</span>
+                        <span id="reqSpecial" style="color:var(--neon-red);" colspan="2">❌ One special character (!@#$%^&*)</span>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" style="width:100%; padding:14px; background:linear-gradient(135deg, var(--primary), var(--secondary)); color:white; border:none; border-radius:8px; font-size:18px; font-weight:bold; cursor:pointer; transition: all 0.3s ease;">
                 Create Account
             </button>
         </form>
 
-        <p style="text-align:center; margin-top:20px; color:#666;">
-            Already have an account? <a href="/login" style="color:#667eea; font-weight:bold; text-decoration:none;">Login</a>
+        <p style="text-align:center; margin-top:20px; color: var(--text-secondary);">
+            Already have an account? <a href="/login" style="color:var(--primary); font-weight:bold; text-decoration:none;">Login</a>
         </p>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const passwordInput = document.getElementById('password');
+        if (passwordInput) {
+            passwordInput.addEventListener('input', function() {
+                const pwd = this.value;
+                
+                const reqLength = document.getElementById('reqLength');
+                const reqUpper = document.getElementById('reqUpper');
+                const reqLower = document.getElementById('reqLower');
+                const reqNumber = document.getElementById('reqNumber');
+                const reqSpecial = document.getElementById('reqSpecial');
+                
+                const hasLength = pwd.length >= 8;
+                const hasUpper = /[A-Z]/.test(pwd);
+                const hasLower = /[a-z]/.test(pwd);
+                const hasNumber = /[0-9]/.test(pwd);
+                const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(pwd);
+                
+                reqLength.innerHTML = (hasLength ? '✅' : '❌') + ' At least 8 characters';
+                reqLength.style.color = hasLength ? 'var(--neon-green)' : 'var(--neon-red)';
+                
+                reqUpper.innerHTML = (hasUpper ? '✅' : '❌') + ' One uppercase letter';
+                reqUpper.style.color = hasUpper ? 'var(--neon-green)' : 'var(--neon-red)';
+                
+                reqLower.innerHTML = (hasLower ? '✅' : '❌') + ' One lowercase letter';
+                reqLower.style.color = hasLower ? 'var(--neon-green)' : 'var(--neon-red)';
+                
+                reqNumber.innerHTML = (hasNumber ? '✅' : '❌') + ' One number';
+                reqNumber.style.color = hasNumber ? 'var(--neon-green)' : 'var(--neon-red)';
+                
+                reqSpecial.innerHTML = (hasSpecial ? '✅' : '❌') + ' One special character (!@#$%^&*)';
+                reqSpecial.style.color = hasSpecial ? 'var(--neon-green)' : 'var(--neon-red)';
+            });
+        }
+    });
+</script>
 {% endblock %}

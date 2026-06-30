@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}API Documentation - PayVerify Nepal{% endblock %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 0 auto;">
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h1 style="font-size: 32px; font-family: var(--font-cyber); color: var(--text-primary);">🔌 API Documentation</h1>
+        <p style="color: var(--text-secondary);">REST API endpoints for PayVerify Nepal</p>
+    </div>
+
+    <div style="background: var(--dark-card); border-radius: 16px; padding: 30px; margin-bottom: 25px; border: 1px solid rgba(0, 212, 255, 0.08);">
+        <h2 style="color: var(--primary); font-size: 20px; margin-bottom: 15px;">📋 Base URL</h2>
+        <div style="background: var(--dark-bg); padding: 12px; border-radius: 8px; font-family: monospace; color: var(--text-primary);">
+            http://localhost:5000/api/
+        </div>
+    </div>
+
+    <div style="background: var(--dark-card); border-radius: 16px; padding: 30px; margin-bottom: 25px; border: 1px solid rgba(0, 212, 255, 0.08);">
+        <h2 style="color: var(--primary); font-size: 20px; margin-bottom: 15px;">🔐 Authentication</h2>
+        
+        <div style="background: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 10px;">
+            <span style="color: var(--primary); font-weight: 600;">POST</span>
+            <span style="color: var(--text-primary);"> /login</span>
+            <div style="color: var(--text-secondary); font-size: 12px; margin-top: 5px;">Login to your account</div>
+        </div>
+        <div style="background: var(--dark-bg); padding: 15px; border-radius: 8px;">
+            <span style="color: var(--primary); font-weight: 600;">POST</span>
+            <span style="color: var(--text-primary);"> /signup</span>
+            <div style="color: var(--text-secondary); font-size: 12px; margin-top: 5px;">Create a new account (age 25-55)</div>
+        </div>
+    </div>
+
+    <div style="background: var(--dark-card); border-radius: 16px; padding: 30px; margin-bottom: 25px; border: 1px solid rgba(0, 212, 255, 0.08);">
+        <h2 style="color: var(--primary); font-size: 20px; margin-bottom: 15px;">📤 Verification Endpoints</h2>
+        
+        <div style="background: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <span style="color: var(--neon-green); font-weight: 600;">POST</span>
+            <span style="color: var(--text-primary);"> /verify</span>
+            <div style="color: var(--text-secondary); font-size: 13px; margin-top: 8px;">
+                Upload a payment screenshot for verification
+            </div>
+            <div style="color: var(--text-secondary); font-size: 12px; margin-top: 5px;">
+                <strong>Request:</strong> multipart/form-data with 'screenshot' file
+            </div>
+            <div style="color: var(--text-secondary); font-size: 12px; margin-top: 5px;">
+                <strong>Response:</strong> JSON with verdict, confidence, flags, extracted fields
+            </div>
+        </div>
+
+        <div style="background: var(--dark-bg); padding: 15px; border-radius: 8px;">
+            <span style="color: var(--neon-yellow); font-weight: 600;">GET</span>
+            <span style="color: var(--text-primary);"> /health</span>
+            <div style="color: var(--text-secondary); font-size: 13px; margin-top: 8px;">
+                Check if the API is running
+            </div>
+            <div style="color: var(--text-secondary); font-size: 12px; margin-top: 5px;">
+                <strong>Response:</strong> {"status": "ok", "model_loaded": true/false}
+            </div>
+        </div>
+    </div>
+
+    <div style="background: var(--dark-card); border-radius: 16px; padding: 30px; margin-bottom: 25px; border: 1px solid rgba(0, 212, 255, 0.08);">
+        <h2 style="color: var(--primary); font-size: 20px; margin-bottom: 15px;">📊 Data Endpoints</h2>
+        
+        <div style="background: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <span style="color: var(--neon-green); font-weight: 600;">GET</span>
+            <span style="color: var(--text-primary);"> /history</span>
+            <div style="color: var(--text-secondary); font-size: 13px; margin-top: 8px;">
+                Get verification history (requires login)
+            </div>
+        </div>
+
+        <div style="background: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <span style="color: var(--neon-green); font-weight: 600;">GET</span>
+            <span style="color: var(--text-primary);"> /dashboard</span>
+            <div style="color: var(--text-secondary); font-size: 13px; margin-top: 8px;">
+                Get dashboard statistics (requires login)
+            </div>
+        </div>
+
+        <div style="background: var(--dark-bg); padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <span style="color: var(--neon-green); font-weight: 600;">GET</span>
+            <span style="color: var(--text-primary);"> /export-history</span>
+            <div style="color: var(--text-secondary); font-size: 13px; margin-top: 8px;">
+                Export history as CSV (requires login)
+            </div>
+        </div>
+
+        <div style="background: var(--dark-bg); padding: 15px; border-radius: 8px;">
+            <span style="color: var(--neon-green); font-weight: 600;">GET</span>
+            <span style="color: var(--text-primary);"> /download-pdf/{verification_id}</span>
+            <div style="color: var(--text-secondary); font-size: 13px; margin-top: 8px;">
+                Download verification report as PDF
+            </div>
+        </div>
+    </div>
+
+    <div style="background: var(--dark-card); border-radius: 16px; padding: 30px; margin-bottom: 25px; border: 1px solid rgba(0, 212, 255, 0.08);">
+        <h2 style="color: var(--primary); font-size: 20px; margin-bottom: 15px;">💻 Example Usage</h2>
+        <div style="background: var(--dark-bg); padding: 15px; border-radius: 8px; font-family: monospace; color: var(--text-secondary); font-size: 13px; overflow-x: auto;">
+            # Upload a screenshot for verification
+            curl -X POST -F "screenshot=@payment.png" http://localhost:5000/verify
+            
+            # Check API health
+            curl http://localhost:5000/health
+            
+            # Export history (requires login)
+            curl -X GET http://localhost:5000/export-history
+        </div>
+    </div>
+
+    <div style="background: var(--dark-card); border-radius: 16px; padding: 30px; margin-bottom: 25px; border: 1px solid rgba(0, 212, 255, 0.08);">
+        <h2 style="color: var(--primary); font-size: 20px; margin-bottom: 15px;">🔒 Privacy & Ethics</h2>
+        <ul style="color: var(--text-secondary); line-height: 2;">
+            <li>🔒 All processing is done locally — No data leaves your device</li>
+            <li>👤 Age validation (25-55) for users</li>
+            <li>🔑 Strong password requirements</li>
+            <li>📊 False positive rate maintained below 5%</li>
+            <li>📁 No real banking credentials stored</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

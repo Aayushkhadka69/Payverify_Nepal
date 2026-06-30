@@ -91,4 +91,4 @@ if (verifyBtn) {
     });
 }
 
-console.log('✅ PayVerify Nepal loaded successfully!');
+console.log('🛡️ PayVerify Nepal loaded successfully!');

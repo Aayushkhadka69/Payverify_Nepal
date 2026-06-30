@@ -1,11 +1,34 @@
 {% extends "base.html" %}
 
-{% block title %}PayVerify Nepal - Payment Screenshot Verification{% endblock %}
+{% block title %}PayVerify Nepal - AI Payment Fraud Detection{% endblock %}
 
 {% block content %}
+<!-- Hero Section with Animation -->
 <div class="hero">
-    <h1>Verify Payment Screenshots<br>Instantly with <span>AI</span></h1>
-    <p>Upload an eSewa or Khalti payment screenshot and get instant verification — Genuine, Fake, or Uncertain.</p>
+    <div class="hero-content">
+        <div class="typing-container">
+            <h1>
+                <span class="typing-text">🛡️ PayVerify Nepal</span>
+            </h1>
+        </div>
+        <p class="hero-subtitle">AI-Powered Payment Screenshot Verification for eSewa &amp; Khalti</p>
+        <p class="hero-description">Upload a payment screenshot and get instant verification — Genuine, Fake, or Uncertain with detailed analysis.</p>
+        
+        <div class="stats-banner">
+            <div class="stat-item">
+                <div class="stat-number">{{ total_verified|default(0) }}</div>
+                <div class="stat-label">Screenshots Verified</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">{{ fraud_detected|default(0) }}</div>
+                <div class="stat-label">Fraud Detected</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">{{ avg_confidence|default('98') }}%</div>
+                <div class="stat-label">Avg. Confidence</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="upload-card">
@@ -25,7 +48,7 @@
         </div>
 
         <img id="preview" alt="Screenshot preview">
-        <div id="fileName" style="display:none; text-align:center; margin-top:10px; color:#667eea; font-weight:600;"></div>
+        <div id="fileName" style="display:none; text-align:center; margin-top:10px; color:var(--primary); font-weight:600;"></div>
 
         <button type="submit" class="btn-verify" id="verifyBtn" disabled>
             <span class="btn-text">🔍 Verify Payment Screenshot</span>
@@ -47,8 +70,90 @@
     </div>
     <div class="feature-card">
         <div class="icon">🔒</div>
-        <h4>Secure & Private</h4>
+        <h4>Privacy First</h4>
         <p>Your data stays on your device. No cloud storage used.</p>
     </div>
 </div>
+
+<style>
+    /* ========================================
+       TYPING ANIMATION
+       ======================================== */
+    .typing-container {
+        display: inline-block;
+    }
+
+    .typing-text {
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+        border-right: 3px solid var(--primary);
+        animation: typing 3s steps(30, end), blink-caret 0.75s step-end infinite;
+        font-size: 44px;
+        font-weight: 900;
+        color: var(--text-primary);
+        font-family: var(--font-cyber);
+    }
+
+    .typing-text span {
+        color: var(--primary);
+    }
+
+    @keyframes typing {
+        from { width: 0; }
+        to { width: 100%; }
+    }
+
+    @keyframes blink-caret {
+        from, to { border-color: transparent; }
+        50% { border-color: var(--primary); }
+    }
+
+    .hero-subtitle {
+        font-size: 20px;
+        color: var(--primary);
+        margin-top: 10px;
+        font-weight: 600;
+        opacity: 0;
+        animation: fadeIn 1s ease forwards 3.5s;
+    }
+
+    .hero-description {
+        font-size: 18px;
+        color: var(--text-secondary);
+        max-width: 600px;
+        margin: 16px auto 30px;
+        line-height: 1.6;
+        opacity: 0;
+        animation: fadeIn 1s ease forwards 4s;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .stats-banner {
+        opacity: 0;
+        animation: fadeIn 1s ease forwards 4.5s;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .typing-text {
+            font-size: 28px;
+            white-space: normal;
+            border-right: none;
+            animation: none;
+        }
+        
+        .hero-subtitle {
+            font-size: 16px;
+        }
+        
+        .hero-description {
+            font-size: 15px;
+        }
+    }
+</style>
 {% endblock %}

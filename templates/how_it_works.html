@@ -3,61 +3,61 @@
 {% block title %}How It Works - PayVerify Nepal{% endblock %}
 
 {% block content %}
-<div style="max-width:800px; margin:0 auto;">
-    <div style="text-align:center; margin-bottom:40px;">
-        <h1 style="font-size:36px;">⚙️ How It Works</h1>
-        <p style="color:#666; font-size:18px;">Understanding the AI verification pipeline</p>
+<div style="max-width: 800px; margin: 0 auto;">
+    <div style="text-align: center; margin-bottom: 40px;">
+        <h1 style="font-size: 36px; font-family: var(--font-cyber); color: var(--text-primary);">⚙️ How It Works</h1>
+        <p style="color: var(--text-secondary); font-size: 18px;">Understanding the AI verification pipeline</p>
     </div>
 
-    <div style="background:white; border-radius:16px; padding:35px; box-shadow:0 2px 10px rgba(0,0,0,0.06);">
+    <div style="background: var(--dark-card); border-radius: 16px; padding: 35px; border: 1px solid rgba(0, 212, 255, 0.08);">
         <!-- Step 1 -->
-        <div style="display:flex; gap:20px; margin-bottom:30px; align-items:flex-start;">
-            <div style="background:linear-gradient(135deg, #667eea, #764ba2); color:white; width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:800; flex-shrink:0;">1</div>
+        <div style="display: flex; gap: 20px; margin-bottom: 30px; align-items: flex-start;">
+            <div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; flex-shrink: 0;">1</div>
             <div>
-                <h3 style="font-size:18px; margin-bottom:8px;">Upload Screenshot</h3>
-                <p style="color:#666; line-height:1.6;">Drag and drop or browse to select an eSewa or Khalti payment screenshot from your device.</p>
+                <h3 style="font-size: 18px; color: var(--text-primary); margin-bottom: 8px;">Upload Screenshot</h3>
+                <p style="color: var(--text-secondary); line-height: 1.6;">Drag and drop or browse to select an eSewa or Khalti payment screenshot from your device.</p>
             </div>
         </div>
 
         <!-- Step 2 -->
-        <div style="display:flex; gap:20px; margin-bottom:30px; align-items:flex-start;">
-            <div style="background:linear-gradient(135deg, #667eea, #764ba2); color:white; width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:800; flex-shrink:0;">2</div>
+        <div style="display: flex; gap: 20px; margin-bottom: 30px; align-items: flex-start;">
+            <div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; flex-shrink: 0;">2</div>
             <div>
-                <h3 style="font-size:18px; margin-bottom:8px;">OCR Text Extraction</h3>
-                <p style="color:#666; line-height:1.6;">Tesseract OCR reads all text from the image, extracting payment details like amount, transaction ID, status, date, and platform.</p>
+                <h3 style="font-size: 18px; color: var(--text-primary); margin-bottom: 8px;">OCR Text Extraction</h3>
+                <p style="color: var(--text-secondary); line-height: 1.6;">Tesseract OCR reads all text from the image, extracting payment details like amount, transaction ID, status, date, and platform.</p>
             </div>
         </div>
 
         <!-- Step 3 -->
-        <div style="display:flex; gap:20px; margin-bottom:30px; align-items:flex-start;">
-            <div style="background:linear-gradient(135deg, #667eea, #764ba2); color:white; width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:800; flex-shrink:0;">3</div>
+        <div style="display: flex; gap: 20px; margin-bottom: 30px; align-items: flex-start;">
+            <div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; flex-shrink: 0;">3</div>
             <div>
-                <h3 style="font-size:18px; margin-bottom:8px;">Rule-Based Analysis</h3>
-                <p style="color:#666; line-height:1.6;">The system checks for missing fields, unusual formats, and suspicious patterns — generating a list of red flags.</p>
+                <h3 style="font-size: 18px; color: var(--text-primary); margin-bottom: 8px;">Rule-Based Analysis</h3>
+                <p style="color: var(--text-secondary); line-height: 1.6;">The system checks for missing fields, unusual formats, and suspicious patterns — generating a list of red flags.</p>
             </div>
         </div>
 
         <!-- Step 4 -->
-        <div style="display:flex; gap:20px; margin-bottom:30px; align-items:flex-start;">
-            <div style="background:linear-gradient(135deg, #667eea, #764ba2); color:white; width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:800; flex-shrink:0;">4</div>
+        <div style="display: flex; gap: 20px; margin-bottom: 30px; align-items: flex-start;">
+            <div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; flex-shrink: 0;">4</div>
             <div>
-                <h3 style="font-size:18px; margin-bottom:8px;">Machine Learning Classification</h3>
-                <p style="color:#666; line-height:1.6;">A trained Random Forest model analyzes extracted features to classify the screenshot as Genuine, Fake, or Uncertain.</p>
+                <h3 style="font-size: 18px; color: var(--text-primary); margin-bottom: 8px;">Machine Learning Classification</h3>
+                <p style="color: var(--text-secondary); line-height: 1.6;">A trained Random Forest model analyzes extracted features to classify the screenshot as Genuine, Fake, or Uncertain.</p>
             </div>
         </div>
 
         <!-- Step 5 -->
-        <div style="display:flex; gap:20px; align-items:flex-start;">
-            <div style="background:linear-gradient(135deg, #667eea, #764ba2); color:white; width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:800; flex-shrink:0;">5</div>
+        <div style="display: flex; gap: 20px; align-items: flex-start;">
+            <div style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; flex-shrink: 0;">5</div>
             <div>
-                <h3 style="font-size:18px; margin-bottom:8px;">Get Detailed Report</h3>
-                <p style="color:#666; line-height:1.6;">Receive a comprehensive verification report with confidence scores, red flags, extracted information, and AI explanations.</p>
+                <h3 style="font-size: 18px; color: var(--text-primary); margin-bottom: 8px;">Get Detailed Report</h3>
+                <p style="color: var(--text-secondary); line-height: 1.6;">Receive a comprehensive verification report with confidence scores, red flags, extracted information, and AI explanations.</p>
             </div>
         </div>
     </div>
 
-    <div style="text-align:center; margin-top:30px;">
-        <a href="/" class="btn btn-primary" style="padding:14px 40px; font-size:18px;">Try It Now</a>
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="/" style="display: inline-block; padding: 14px 40px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; border: none; border-radius: 10px; font-size: 18px; font-weight: 600; text-decoration: none; transition: all 0.3s ease;">Try It Now</a>
     </div>
 </div>
 {% endblock %}
