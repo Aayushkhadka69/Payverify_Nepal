@@ -33,7 +33,8 @@ os.makedirs(SAVED_FOLDER, exist_ok=True)
 # Set Tesseract path for Windows
 if os.name == 'nt':
     pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-
+else:
+    pytesseract.pytesseract.tesseract_cmd = '/usr/bin/tesseract'
 def allowed_file(f):
     return '.' in f and f.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
