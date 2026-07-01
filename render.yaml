@@ -1,10 +1,7 @@
 services:
   - type: web
     name: payverify-nepal
-    runtime: docker
+    runtime: python
     plan: free
-    autoDeploy: true
-    dockerfilePath: ./Dockerfile
-    envVars:
-      - key: TESSERACT_CMD
-        value: /usr/bin/tesseract
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
